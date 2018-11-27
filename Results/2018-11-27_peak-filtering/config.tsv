@@ -1,0 +1,9 @@
+Condition	Replicate	narrowPeak
+Ctrl	1	../../Data/Processed/2018-09-17/output_Ctrl/peak/macs2/rep1/Rashimi_ATAC1_S25_L007_R1_001.nodup.tn5.pf.narrowPeak.gz
+Ctrl	2	../../Data/Processed/2018-09-17/output_Ctrl/peak/macs2/rep2/Rashim_ATAC2_S26_L007_R1_001.nodup.tn5.pf.narrowPeak.gz
+Ctrl	3	../../Data/Processed/2018-09-17/output_Ctrl/peak/macs2/rep3/Rashim_ATAC3_S27_L007_R1_001.nodup.tn5.pf.narrowPeak.gz
+MB6	1	../../Data/Processed/2018-09-17/output_MB6/peak/macs2/rep1/Rashim_ATAC4_S28_L007_R1_001.nodup.tn5.pf.narrowPeak.gz
+MB6	2	../../Data/Processed/2018-09-17/output_MB6/peak/macs2/rep2/5_S21_L006_R1_001.nodup.tn5.pf.narrowPeak.gz
+MB6	3	../../Data/Processed/2018-09-17/output_MB6/peak/macs2/rep3/6_S22_L006_R1_001.nodup.tn5.pf.narrowPeak.gz
+MB6Pen	1	../../Data/Processed/2018-09-17/output_MB6Pen/peak/macs2/rep1/7_S23_L006_R1_001.nodup.tn5.pf.narrowPeak.gz
+MB6Pen	2	../../Data/Processed/2018-09-17/output_MB6Pen/peak/macs2/rep2/8_S24_L006_R1_001.nodup.tn5.pf.narrowPeak.gz

@@ -41,6 +41,7 @@ rsconnect/
 
 # bioinformatics files
 *.bed
+*.bedGraph
 *.bigWig
 *.tdf
 *.ba[im]
