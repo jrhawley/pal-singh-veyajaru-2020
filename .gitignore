@@ -34,3 +34,15 @@ vignettes/*.pdf
 
 # Shiny token, see https://shiny.rstudio.com/articles/shinyapps.html
 rsconnect/
+
+# macOS files
+._*
+.DS_Store
+
+# bioinformatics files
+*.bed
+*.bigWig
+*.tdf
+*.ba[im]
+*.gz
+*.tar

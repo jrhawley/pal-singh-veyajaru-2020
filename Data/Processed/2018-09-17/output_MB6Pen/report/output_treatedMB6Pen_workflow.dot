@@ -1,0 +1,97 @@
+strict digraph {
+
+rankdir=LR
+
+node [shape=ellipse,style="filled,rounded",margin=0,fontsize=10];
+edge [color=gray,fontsize=10,arrowsize=0.5];
+
+	"IDR QC log-" [label="IDR QC log",id="IDR QC log-",style="filled,rounded",fillcolor=whitesmoke,tooltip="./qc/output_treatedMB6Pen_IDR_final.qc",href=".././qc/output_treatedMB6Pen_IDR_final.qc", target="_blank"];
+	"IDR peak-rep1-rep2" [label="IDR peak",id="IDR peak-rep1-rep2"style="filled,rounded",fillcolor=whitesmoke,tooltip="./peak/macs2/idr/true_reps/rep1-rep2/output_treatedMB6Pen_rep1-rep2.IDR0.1.narrowPeak.gz",href=".././peak/macs2/idr/true_reps/rep1-rep2/output_treatedMB6Pen_rep1-rep2.IDR0.1.narrowPeak.gz", target="_blank"];
+	"bam\n126M-rep2" [label="bam\n126M",id="bam\n126M-rep2"style="filled,rounded",fillcolor=whitesmoke,tooltip="./align/rep2/8_S24_L006_R1_001.bam",href=".././align/rep2/8_S24_L006_R1_001.bam", target="_blank"];
+	"bam\n59M-rep1" [label="bam\n59M",id="bam\n59M-rep1"style="filled,rounded",fillcolor=whitesmoke,tooltip="./align/rep1/7_S23_L006_R1_001.bam",href=".././align/rep1/7_S23_L006_R1_001.bam", target="_blank"];
+	"fastq\n126M-rep2" [label="fastq\n126M",id="fastq\n126M-rep2"style="filled,rounded",fillcolor=whitesmoke,tooltip="/mnt/work1/users/carlsgroup/workinprogres/nibeh/180719_D00165_0213_ACCL7AANXX_180801_D00165_0215_ACCJMHANXX_Rashim/180719_D00165_0213_ACCL7AANXX/8_S24_L006_R1_001.fastq.gz", target="_blank"];
+	"fastq\n59M-rep1" [label="fastq\n59M",id="fastq\n59M-rep1"style="filled,rounded",fillcolor=whitesmoke,tooltip="/mnt/work1/users/carlsgroup/workinprogres/nibeh/180719_D00165_0213_ACCL7AANXX_180801_D00165_0215_ACCJMHANXX_Rashim/180719_D00165_0213_ACCL7AANXX/7_S23_L006_R1_001.fastq.gz", target="_blank"];
+	"filt. bam\n15M-rep1" [label="filt. bam\n15M",id="filt. bam\n15M-rep1"style="filled,rounded",fillcolor=whitesmoke,tooltip="./align/rep1/7_S23_L006_R1_001.nodup.bam",href=".././align/rep1/7_S23_L006_R1_001.nodup.bam", target="_blank"];
+	"filt. bam\n32M-rep2" [label="filt. bam\n32M",id="filt. bam\n32M-rep2"style="filled,rounded",fillcolor=whitesmoke,tooltip="./align/rep2/8_S24_L006_R1_001.nodup.bam",href=".././align/rep2/8_S24_L006_R1_001.nodup.bam", target="_blank"];
+	"n. peak\noverlap-" [label="n. peak\noverlap",id="n. peak\noverlap-",style="filled,rounded",fillcolor=whitesmoke,tooltip="./peak/macs2/overlap/7_S23_L006_R1_001.nodup.tn5_8_S24_L006_R1_001.nodup.tn5.pf.500K.pval0.01.naive_overlap.narrowPeak.gz",href=".././peak/macs2/overlap/7_S23_L006_R1_001.nodup.tn5_8_S24_L006_R1_001.nodup.tn5.pf.500K.pval0.01.naive_overlap.narrowPeak.gz", target="_blank"];
+	"n. peak\np-val<0.01-pooled_rep" [label="n. peak\np-val<0.01",id="n. peak\np-val<0.01-pooled_rep"style="filled,rounded",fillcolor=whitesmoke,tooltip="./peak/macs2/pooled_rep/7_S23_L006_R1_001.nodup.tn5_8_S24_L006_R1_001.nodup.tn5.pf.narrowPeak.gz",href=".././peak/macs2/pooled_rep/7_S23_L006_R1_001.nodup.tn5_8_S24_L006_R1_001.nodup.tn5.pf.narrowPeak.gz", target="_blank"];
+	"n. peak\np-val<0.01-rep1" [label="n. peak\np-val<0.01",id="n. peak\np-val<0.01-rep1"style="filled,rounded",fillcolor=whitesmoke,tooltip="./peak/macs2/rep1/7_S23_L006_R1_001.nodup.tn5.pf.narrowPeak.gz",href=".././peak/macs2/rep1/7_S23_L006_R1_001.nodup.tn5.pf.narrowPeak.gz", target="_blank"];
+	"n. peak\np-val<0.01-rep2" [label="n. peak\np-val<0.01",id="n. peak\np-val<0.01-rep2"style="filled,rounded",fillcolor=whitesmoke,tooltip="./peak/macs2/rep2/8_S24_L006_R1_001.nodup.tn5.pf.narrowPeak.gz",href=".././peak/macs2/rep2/8_S24_L006_R1_001.nodup.tn5.pf.narrowPeak.gz", target="_blank"];
+	"signal fc-pooled_rep" [label="signal fc",id="signal fc-pooled_rep",style="filled,rounded",fillcolor=whitesmoke,tooltip="./signal/macs2/pooled_rep/7_S23_L006_R1_001.nodup.tn5_8_S24_L006_R1_001.nodup.tn5.pf.fc.signal.bigwig",href=".././signal/macs2/pooled_rep/7_S23_L006_R1_001.nodup.tn5_8_S24_L006_R1_001.nodup.tn5.pf.fc.signal.bigwig", target="_blank"];
+	"signal fc-rep1" [label="signal fc",id="signal fc-rep1",style="filled,rounded",fillcolor=whitesmoke,tooltip="./signal/macs2/rep1/7_S23_L006_R1_001.nodup.tn5.pf.fc.signal.bigwig",href=".././signal/macs2/rep1/7_S23_L006_R1_001.nodup.tn5.pf.fc.signal.bigwig", target="_blank"];
+	"signal fc-rep2" [label="signal fc",id="signal fc-rep2",style="filled,rounded",fillcolor=whitesmoke,tooltip="./signal/macs2/rep2/8_S24_L006_R1_001.nodup.tn5.pf.fc.signal.bigwig",href=".././signal/macs2/rep2/8_S24_L006_R1_001.nodup.tn5.pf.fc.signal.bigwig", target="_blank"];
+	"signal p-val-pooled_rep" [label="signal p-val",id="signal p-val-pooled_rep",style="filled,rounded",fillcolor=whitesmoke,tooltip="./signal/macs2/pooled_rep/7_S23_L006_R1_001.nodup.tn5_8_S24_L006_R1_001.nodup.tn5.pf.pval.signal.bigwig",href=".././signal/macs2/pooled_rep/7_S23_L006_R1_001.nodup.tn5_8_S24_L006_R1_001.nodup.tn5.pf.pval.signal.bigwig", target="_blank"];
+	"signal p-val-rep1" [label="signal p-val",id="signal p-val-rep1",style="filled,rounded",fillcolor=whitesmoke,tooltip="./signal/macs2/rep1/7_S23_L006_R1_001.nodup.tn5.pf.pval.signal.bigwig",href=".././signal/macs2/rep1/7_S23_L006_R1_001.nodup.tn5.pf.pval.signal.bigwig", target="_blank"];
+	"signal p-val-rep2" [label="signal p-val",id="signal p-val-rep2",style="filled,rounded",fillcolor=whitesmoke,tooltip="./signal/macs2/rep2/8_S24_L006_R1_001.nodup.tn5.pf.pval.signal.bigwig",href=".././signal/macs2/rep2/8_S24_L006_R1_001.nodup.tn5.pf.pval.signal.bigwig", target="_blank"];
+	"tag-align-pooled_rep" [label="tag-align",id="tag-align-pooled_rep"style="filled,rounded",fillcolor=whitesmoke,tooltip="./align/pooled_rep/7_S23_L006_R1_001.nodup.tn5_8_S24_L006_R1_001.nodup.tn5.tagAlign.gz",href=".././align/pooled_rep/7_S23_L006_R1_001.nodup.tn5_8_S24_L006_R1_001.nodup.tn5.tagAlign.gz", target="_blank"];
+	"tag-align-rep1" [label="tag-align",id="tag-align-rep1"style="filled,rounded",fillcolor=whitesmoke,tooltip="./align/rep1/7_S23_L006_R1_001.nodup.tn5.tagAlign.gz",href=".././align/rep1/7_S23_L006_R1_001.nodup.tn5.tagAlign.gz", target="_blank"];
+	"tag-align-rep2" [label="tag-align",id="tag-align-rep2"style="filled,rounded",fillcolor=whitesmoke,tooltip="./align/rep2/8_S24_L006_R1_001.nodup.tn5.tagAlign.gz",href=".././align/rep2/8_S24_L006_R1_001.nodup.tn5.tagAlign.gz", target="_blank"];
+	"BOWTIE2-rep1" [label="BOWTIE2",id="BOWTIE2-rep1",fontsize=12,shape=box,style="filled,rounded",fillcolor=salmon];
+	"BOWTIE2-rep2" [label="BOWTIE2",id="BOWTIE2-rep2",fontsize=12,shape=box,style="filled,rounded",fillcolor=salmon];
+	"FILTER-rep1" [label="FILTER",id="FILTER-rep1",fontsize=12,shape=box,style="filled,rounded",fillcolor=lightcoral];
+	"FILTER-rep2" [label="FILTER",id="FILTER-rep2",fontsize=12,shape=box,style="filled,rounded",fillcolor=lightcoral];
+	"IDR QC-" [label="IDR QC",id="IDR QC-",fontsize=12,shape=box,style="filled,rounded",fillcolor=pink];
+	"IDR-rep1-rep2" [label="IDR",id="IDR-rep1-rep2",fontsize=12,shape=box,style="filled,rounded",fillcolor=limegreen];
+	"MACS2\np-val<0.01-pooled_rep" [label="MACS2\np-val<0.01",id="MACS2\np-val<0.01-pooled_rep",fontsize=12,shape=box,style="filled,rounded",fillcolor=lightgreen];
+	"MACS2\np-val<0.01-rep1" [label="MACS2\np-val<0.01",id="MACS2\np-val<0.01-rep1",fontsize=12,shape=box,style="filled,rounded",fillcolor=lightgreen];
+	"MACS2\np-val<0.01-rep2" [label="MACS2\np-val<0.01",id="MACS2\np-val<0.01-rep2",fontsize=12,shape=box,style="filled,rounded",fillcolor=lightgreen];
+	"NAIVE\nOVERLAP\nn. peak-" [label="NAIVE\nOVERLAP\nn. peak",id="NAIVE\nOVERLAP\nn. peak-",fontsize=12,shape=box,style="filled,rounded",fillcolor=skyblue];
+	"tag-align-rep1" -> "tag-align-pooled_rep";
+	"tag-align-rep2" -> "tag-align-pooled_rep";
+	"n. peak\np-val<0.01-pooled_rep" -> "NAIVE\nOVERLAP\nn. peak-";
+	"NAIVE\nOVERLAP\nn. peak-" -> "n. peak\noverlap-";
+	"n. peak\np-val<0.01-rep1" -> "NAIVE\nOVERLAP\nn. peak-";
+	"n. peak\np-val<0.01-rep2" -> "NAIVE\nOVERLAP\nn. peak-";
+	"n. peak\np-val<0.01-rep1" -> "IDR-rep1-rep2";
+	"n. peak\np-val<0.01-rep2" -> "IDR-rep1-rep2";
+	"n. peak\np-val<0.01-pooled_rep" -> "IDR-rep1-rep2";
+	"IDR peak-rep1-rep2" -> "IDR QC-";
+	"IDR QC-" -> "IDR QC log-";
+
+
+subgraph cluster_pooled_rep {
+
+	"tag-align-pooled_rep" -> "MACS2\np-val<0.01-pooled_rep";
+	"MACS2\np-val<0.01-pooled_rep" -> "n. peak\np-val<0.01-pooled_rep";
+	"MACS2\np-val<0.01-pooled_rep" -> "signal fc-pooled_rep";
+	"MACS2\np-val<0.01-pooled_rep" -> "signal p-val-pooled_rep";
+
+color="gainsboro";style="filled,rounded";label="Pooled replicate";}
+
+subgraph cluster_rep1 {
+
+	"fastq\n59M-rep1" -> "BOWTIE2-rep1";
+	"BOWTIE2-rep1" -> "bam\n59M-rep1";
+	"bam\n59M-rep1" -> "FILTER-rep1";
+	"FILTER-rep1" -> "filt. bam\n15M-rep1";
+	"filt. bam\n15M-rep1" -> "tag-align-rep1";
+	"tag-align-rep1" -> "MACS2\np-val<0.01-rep1";
+	"MACS2\np-val<0.01-rep1" -> "n. peak\np-val<0.01-rep1";
+	"MACS2\np-val<0.01-rep1" -> "signal fc-rep1";
+	"MACS2\np-val<0.01-rep1" -> "signal p-val-rep1";
+
+color="gainsboro";style="filled,rounded";label="Replicate 1";}
+
+subgraph cluster_rep1_rep2 {
+
+	"IDR-rep1-rep2" -> "IDR peak-rep1-rep2";
+
+color="gainsboro";style="filled,rounded";label="Rep. 1 vs. Rep. 2";}
+
+subgraph cluster_rep2 {
+
+	"fastq\n126M-rep2" -> "BOWTIE2-rep2";
+	"BOWTIE2-rep2" -> "bam\n126M-rep2";
+	"bam\n126M-rep2" -> "FILTER-rep2";
+	"FILTER-rep2" -> "filt. bam\n32M-rep2";
+	"filt. bam\n32M-rep2" -> "tag-align-rep2";
+	"tag-align-rep2" -> "MACS2\np-val<0.01-rep2";
+	"MACS2\np-val<0.01-rep2" -> "n. peak\np-val<0.01-rep2";
+	"MACS2\np-val<0.01-rep2" -> "signal fc-rep2";
+	"MACS2\np-val<0.01-rep2" -> "signal p-val-rep2";
+
+color="gainsboro";style="filled,rounded";label="Replicate 2";}
+
+
+
+}

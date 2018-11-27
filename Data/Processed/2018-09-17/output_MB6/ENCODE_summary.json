@@ -1,0 +1,383 @@
+{
+	"ENCODE_award_rfa" : "",
+	"ENCODE_assay_category" : "",
+	"ENCODE_assay_title" : "ATAC-seq",
+	"ENCODE_accession" : "",
+	"species" : "hg19",
+	"title" : "output_treatedMB6",
+	"data_files" : [
+		{
+			"aliases:array" : "[KLAB_PIPELINE:6_S22_L006_R1_001.nodup.bam]",
+			"assembly" : "",
+			"award" : "",
+			"dataset" : "",
+			"derived_from:array" : "[KLAB_PIPELINE:6_S22_L006_R1_001.fastq.gz]",
+			"file_format" : "bam",
+			"file_size" : "549171036",
+			"lab" : "",
+			"md5sum" : "2376d0dd0a25236a48a24f5b428b7b03",
+			"output_type" : "alignments",
+			"step_run" : "anshul-kundaje:atac-seq-trim-align-filter-step-run-v1",
+			"submitted_file_name" : "6_S22_L006_R1_001.nodup.bam"
+		}
+		
+		,
+		{
+			"aliases:array" : "[KLAB_PIPELINE:Rashim_ATAC4_S28_L007_R1_001.nodup.bam]",
+			"assembly" : "",
+			"award" : "",
+			"dataset" : "",
+			"derived_from:array" : "[KLAB_PIPELINE:Rashim_ATAC4_S28_L007_R1_001.fastq.gz]",
+			"file_format" : "bam",
+			"file_size" : "600406014",
+			"lab" : "",
+			"md5sum" : "363dd07589d2f923e1cc15aede32efc1",
+			"output_type" : "alignments",
+			"step_run" : "anshul-kundaje:atac-seq-trim-align-filter-step-run-v1",
+			"submitted_file_name" : "Rashim_ATAC4_S28_L007_R1_001.nodup.bam"
+		}
+		
+		,
+		{
+			"aliases:array" : "[KLAB_PIPELINE:5_S21_L006_R1_001.nodup.bam]",
+			"assembly" : "",
+			"award" : "",
+			"dataset" : "",
+			"derived_from:array" : "[KLAB_PIPELINE:5_S21_L006_R1_001.fastq.gz]",
+			"file_format" : "bam",
+			"file_size" : "460160734",
+			"lab" : "",
+			"md5sum" : "1468b28eccf725e97673af97920edfac",
+			"output_type" : "alignments",
+			"step_run" : "anshul-kundaje:atac-seq-trim-align-filter-step-run-v1",
+			"submitted_file_name" : "5_S21_L006_R1_001.nodup.bam"
+		}
+		
+	],
+	"qc_files" : [
+		{
+			"contents" : "69868760\t0\t0\t0\t69172359\t0\t99.00\t0\t0\t0\t0\t0\t0\t0\t0\tN/A\t0\t0\t0\t0\tN/A\t0\t0",
+			"header" : "total\ttotal_qc_failed\tduplicates\tduplicates_qc_failed\tmapped\tmapped_qc_failed\tmapped_pct\tpaired\tpaired_qc_failed\tread1\tread1_qc_failed\tread2\tread2_qc_failed\tpaired_properly\tpaired_properly_qc_failed\tpaired_properly_pct\twith_itself\twith_itself_qc_failed\tsingletons\tsingletons_qc_failed\tsingletons_pct\tdiff_chroms\tdiff_chroms_qc_failed",
+			"info" : "rep1",
+			"qc_type" : "flagstat"
+		}
+		
+		,
+		{
+			"contents" : "29671949\t0\t0\t0\t29283802\t0\t98.69\t0\t0\t0\t0\t0\t0\t0\t0\tN/A\t0\t0\t0\t0\tN/A\t0\t0",
+			"header" : "total\ttotal_qc_failed\tduplicates\tduplicates_qc_failed\tmapped\tmapped_qc_failed\tmapped_pct\tpaired\tpaired_qc_failed\tread1\tread1_qc_failed\tread2\tread2_qc_failed\tpaired_properly\tpaired_properly_qc_failed\tpaired_properly_pct\twith_itself\twith_itself_qc_failed\tsingletons\tsingletons_qc_failed\tsingletons_pct\tdiff_chroms\tdiff_chroms_qc_failed",
+			"info" : "rep2",
+			"qc_type" : "flagstat"
+		}
+		
+		,
+		{
+			"contents" : "47973062\t0\t0\t0\t47538193\t0\t99.09\t0\t0\t0\t0\t0\t0\t0\t0\tN/A\t0\t0\t0\t0\tN/A\t0\t0",
+			"header" : "total\ttotal_qc_failed\tduplicates\tduplicates_qc_failed\tmapped\tmapped_qc_failed\tmapped_pct\tpaired\tpaired_qc_failed\tread1\tread1_qc_failed\tread2\tread2_qc_failed\tpaired_properly\tpaired_properly_qc_failed\tpaired_properly_pct\twith_itself\twith_itself_qc_failed\tsingletons\tsingletons_qc_failed\tsingletons_pct\tdiff_chroms\tdiff_chroms_qc_failed",
+			"info" : "rep3",
+			"qc_type" : "flagstat"
+		}
+		
+		,
+		{
+			"contents" : "46218591\t0\t0\t32738131\t0\tN/A\t0.708332",
+			"header" : "unpaired_reads\tpaired_reads\tunmapped_reads\tunpaired_dupes\tpaired_dupes\tpaired_opt_dupes\tdupes_pct",
+			"info" : "rep1",
+			"qc_type" : "dup"
+		}
+		
+		,
+		{
+			"contents" : "20280229\t0\t0\t10941007\t0\tN/A\t0.539491",
+			"header" : "unpaired_reads\tpaired_reads\tunmapped_reads\tunpaired_dupes\tpaired_dupes\tpaired_opt_dupes\tdupes_pct",
+			"info" : "rep2",
+			"qc_type" : "dup"
+		}
+		
+		,
+		{
+			"contents" : "33008577\t0\t0\t20900079\t0\tN/A\t0.633171",
+			"header" : "unpaired_reads\tpaired_reads\tunmapped_reads\tunpaired_dupes\tpaired_dupes\tpaired_opt_dupes\tdupes_pct",
+			"info" : "rep3",
+			"qc_type" : "dup"
+		}
+		
+		,
+		{
+			"contents" : "13480460\t0\t0\t0\t13480460\t0\t100.00\t0\t0\t0\t0\t0\t0\t0\t0\tN/A\t0\t0\t0\t0\tN/A\t0\t0",
+			"header" : "total\ttotal_qc_failed\tduplicates\tduplicates_qc_failed\tmapped\tmapped_qc_failed\tmapped_pct\tpaired\tpaired_qc_failed\tread1\tread1_qc_failed\tread2\tread2_qc_failed\tpaired_properly\tpaired_properly_qc_failed\tpaired_properly_pct\twith_itself\twith_itself_qc_failed\tsingletons\tsingletons_qc_failed\tsingletons_pct\tdiff_chroms\tdiff_chroms_qc_failed",
+			"info" : "rep1",
+			"qc_type" : "flagstat_filt"
+		}
+		
+		,
+		{
+			"contents" : "9339222\t0\t0\t0\t9339222\t0\t100.00\t0\t0\t0\t0\t0\t0\t0\t0\tN/A\t0\t0\t0\t0\tN/A\t0\t0",
+			"header" : "total\ttotal_qc_failed\tduplicates\tduplicates_qc_failed\tmapped\tmapped_qc_failed\tmapped_pct\tpaired\tpaired_qc_failed\tread1\tread1_qc_failed\tread2\tread2_qc_failed\tpaired_properly\tpaired_properly_qc_failed\tpaired_properly_pct\twith_itself\twith_itself_qc_failed\tsingletons\tsingletons_qc_failed\tsingletons_pct\tdiff_chroms\tdiff_chroms_qc_failed",
+			"info" : "rep2",
+			"qc_type" : "flagstat_filt"
+		}
+		
+		,
+		{
+			"contents" : "12108498\t0\t0\t0\t12108498\t0\t100.00\t0\t0\t0\t0\t0\t0\t0\t0\tN/A\t0\t0\t0\t0\tN/A\t0\t0",
+			"header" : "total\ttotal_qc_failed\tduplicates\tduplicates_qc_failed\tmapped\tmapped_qc_failed\tmapped_pct\tpaired\tpaired_qc_failed\tread1\tread1_qc_failed\tread2\tread2_qc_failed\tpaired_properly\tpaired_properly_qc_failed\tpaired_properly_pct\twith_itself\twith_itself_qc_failed\tsingletons\tsingletons_qc_failed\tsingletons_pct\tdiff_chroms\tdiff_chroms_qc_failed",
+			"info" : "rep3",
+			"qc_type" : "flagstat_filt"
+		}
+		
+		,
+		{
+			"contents" : "15640993\t13582281\t12457421\t884282\t0.868377\t0.917182\t14.087611",
+			"header" : "total_read_pairs\tdistinct_read_pairs\tone_read_pair\ttwo_read_pair\tNRF\tPBC1\tPBC2",
+			"info" : "rep1",
+			"qc_type" : "pbc"
+		}
+		
+		,
+		{
+			"contents" : "10096506\t9366024\t8879106\t413992\t0.927650\t0.948012\t21.447530",
+			"header" : "total_read_pairs\tdistinct_read_pairs\tone_read_pair\ttwo_read_pair\tNRF\tPBC1\tPBC2",
+			"info" : "rep2",
+			"qc_type" : "pbc"
+		}
+		
+		,
+		{
+			"contents" : "13735196\t12157630\t11147501\t830574\t0.885144\t0.916914\t13.421442",
+			"header" : "total_read_pairs\tdistinct_read_pairs\tone_read_pair\ttwo_read_pair\tNRF\tPBC1\tPBC2",
+			"info" : "rep3",
+			"qc_type" : "pbc"
+		}
+		
+		,
+		{
+			"contents" : "13456713\t0\t0.21802276556196\t55\t0.2265881\t1500\t0.1551318\t1.405404\t0.8801313",
+			"header" : "num_reads\test_frag_len\tcorr_est_frag_len\tphantom_peak\tcorr_phantom_peak\targmin_corr\tmin_corr\tNSC\tRSC",
+			"info" : "rep1",
+			"qc_type" : "xcor"
+		}
+		
+		,
+		{
+			"contents" : "9316137\t0\t0.156979084568399\t55\t0.161849\t1500\t0.115146\t1.363304\t0.8957254",
+			"header" : "num_reads\test_frag_len\tcorr_est_frag_len\tphantom_peak\tcorr_phantom_peak\targmin_corr\tmin_corr\tNSC\tRSC",
+			"info" : "rep2",
+			"qc_type" : "xcor"
+		}
+		
+		,
+		{
+			"contents" : "12085170\t0\t0.19561727845259\t55\t0.2012102\t1500\t0.1427977\t1.369891\t0.9042511",
+			"header" : "num_reads\test_frag_len\tcorr_est_frag_len\tphantom_peak\tcorr_phantom_peak\targmin_corr\tmin_corr\tNSC\tRSC",
+			"info" : "rep3",
+			"qc_type" : "xcor"
+		}
+		
+		,
+		{
+			"contents" : "212839\t166045\t221533\t249523\t98434",
+			"header" : "rep1\trep2\trep3\tpooled\toverlap",
+			"info" : "null",
+			"qc_type" : "num_peaks"
+		}
+		
+		,
+		{
+			"contents" : "0.18565",
+			"header" : "FRiP",
+			"info" : "rep1-rep2",
+			"qc_type" : "idr_FRiP"
+		}
+		
+		,
+		{
+			"contents" : "0.193933",
+			"header" : "FRiP",
+			"info" : "rep1-rep3",
+			"qc_type" : "idr_FRiP"
+		}
+		
+		,
+		{
+			"contents" : "0.186647",
+			"header" : "FRiP",
+			"info" : "rep2-rep3",
+			"qc_type" : "idr_FRiP"
+		}
+		
+		,
+		{
+			"contents" : "67289\t\t\t0\t67289\t67289\trep1-rep3\trep1-rep3\t0.0\t1.0\tpass",
+			"header" : "Nt\tN1\tN2\tNp\tN_opt\tN_consv\topt_set\tconsv_set\trescue_ratio\tself_consistency_ratio\treproducibility_test",
+			"info" : "rep1",
+			"qc_type" : "idr"
+		}
+		
+	],
+	"ENCODE_quality_metrics" : [
+		{
+			"ENCODE_qc_type" : "samtools_flagstats_quality_metric",
+			"award" : "",
+			"diff_chroms" : "0",
+			"diff_chroms_qc_failed" : "0",
+			"duplicates" : "0",
+			"duplicates_qc_failed" : "0",
+			"lab" : "",
+			"mapped" : "47538193",
+			"mapped_pct" : "99.09",
+			"mapped_qc_failed" : "0",
+			"paired" : "0",
+			"paired_properly" : "0",
+			"paired_properly_pct" : "N/A",
+			"paired_properly_qc_failed" : "0",
+			"paired_qc_failed" : "0",
+			"quality_metric_of:array" : "[KLAB_PIPELINE:6_S22_L006_R1_001.nodup.bam]",
+			"read1" : "0",
+			"read1_qc_failed" : "0",
+			"read2" : "0",
+			"read2_qc_failed" : "0",
+			"singletons" : "0",
+			"singletons_pct" : "N/A",
+			"singletons_qc_failed" : "0",
+			"step_run" : "anshul-kundaje:atac-seq-trim-align-filter-step-run-v1",
+			"total" : "47973062",
+			"total_qc_failed" : "0",
+			"with_itself" : "0",
+			"with_itself_qc_failed" : "0"
+		}
+		
+		,
+		{
+			"ENCODE_qc_type" : "samtools_flagstats_quality_metric",
+			"award" : "",
+			"diff_chroms" : "0",
+			"diff_chroms_qc_failed" : "0",
+			"duplicates" : "0",
+			"duplicates_qc_failed" : "0",
+			"lab" : "",
+			"mapped" : "69172359",
+			"mapped_pct" : "99.00",
+			"mapped_qc_failed" : "0",
+			"paired" : "0",
+			"paired_properly" : "0",
+			"paired_properly_pct" : "N/A",
+			"paired_properly_qc_failed" : "0",
+			"paired_qc_failed" : "0",
+			"quality_metric_of:array" : "[KLAB_PIPELINE:Rashim_ATAC4_S28_L007_R1_001.nodup.bam]",
+			"read1" : "0",
+			"read1_qc_failed" : "0",
+			"read2" : "0",
+			"read2_qc_failed" : "0",
+			"singletons" : "0",
+			"singletons_pct" : "N/A",
+			"singletons_qc_failed" : "0",
+			"step_run" : "anshul-kundaje:atac-seq-trim-align-filter-step-run-v1",
+			"total" : "69868760",
+			"total_qc_failed" : "0",
+			"with_itself" : "0",
+			"with_itself_qc_failed" : "0"
+		}
+		
+		,
+		{
+			"ENCODE_qc_type" : "samtools_flagstats_quality_metric",
+			"award" : "",
+			"diff_chroms" : "0",
+			"diff_chroms_qc_failed" : "0",
+			"duplicates" : "0",
+			"duplicates_qc_failed" : "0",
+			"lab" : "",
+			"mapped" : "29283802",
+			"mapped_pct" : "98.69",
+			"mapped_qc_failed" : "0",
+			"paired" : "0",
+			"paired_properly" : "0",
+			"paired_properly_pct" : "N/A",
+			"paired_properly_qc_failed" : "0",
+			"paired_qc_failed" : "0",
+			"quality_metric_of:array" : "[KLAB_PIPELINE:5_S21_L006_R1_001.nodup.bam]",
+			"read1" : "0",
+			"read1_qc_failed" : "0",
+			"read2" : "0",
+			"read2_qc_failed" : "0",
+			"singletons" : "0",
+			"singletons_pct" : "N/A",
+			"singletons_qc_failed" : "0",
+			"step_run" : "anshul-kundaje:atac-seq-trim-align-filter-step-run-v1",
+			"total" : "29671949",
+			"total_qc_failed" : "0",
+			"with_itself" : "0",
+			"with_itself_qc_failed" : "0"
+		}
+		
+		,
+		{
+			"ENCODE_qc_type" : "complexity_xcorr_quality_metric",
+			"NRF" : "0.885144",
+			"NSC" : "1.369891",
+			"PBC1" : "0.916914",
+			"PBC2" : "13.421442",
+			"RSC" : "0.9042511",
+			"award" : "",
+			"cross_correlation_plot" : "/mnt/work1/users/carlsgroup/workinprogres/nibeh/atac_dnase_pipelines5/output_treatedMB6/qc/rep3/6_S22_L006_R1_001.nodup.25M.cc.plot.pdf",
+			"fragment length" : "0",
+			"lab" : "",
+			"paired-end" : "false",
+			"quality_metric_of:array" : "[KLAB_PIPELINE:6_S22_L006_R1_001.nodup.bam]",
+			"read length" : "50",
+			"sample size" : "12085170",
+			"step_run" : "anshul-kundaje:atac-seq-trim-align-filter-step-run-v1"
+		}
+		
+		,
+		{
+			"ENCODE_qc_type" : "complexity_xcorr_quality_metric",
+			"NRF" : "0.868377",
+			"NSC" : "1.405404",
+			"PBC1" : "0.917182",
+			"PBC2" : "14.087611",
+			"RSC" : "0.8801313",
+			"award" : "",
+			"cross_correlation_plot" : "/mnt/work1/users/carlsgroup/workinprogres/nibeh/atac_dnase_pipelines5/output_treatedMB6/qc/rep1/Rashim_ATAC4_S28_L007_R1_001.nodup.25M.cc.plot.pdf",
+			"fragment length" : "0",
+			"lab" : "",
+			"paired-end" : "false",
+			"quality_metric_of:array" : "[KLAB_PIPELINE:Rashim_ATAC4_S28_L007_R1_001.nodup.bam]",
+			"read length" : "50",
+			"sample size" : "13456713",
+			"step_run" : "anshul-kundaje:atac-seq-trim-align-filter-step-run-v1"
+		}
+		
+		,
+		{
+			"ENCODE_qc_type" : "complexity_xcorr_quality_metric",
+			"NRF" : "0.927650",
+			"NSC" : "1.363304",
+			"PBC1" : "0.948012",
+			"PBC2" : "21.447530",
+			"RSC" : "0.8957254",
+			"award" : "",
+			"cross_correlation_plot" : "/mnt/work1/users/carlsgroup/workinprogres/nibeh/atac_dnase_pipelines5/output_treatedMB6/qc/rep2/5_S21_L006_R1_001.nodup.25M.cc.plot.pdf",
+			"fragment length" : "0",
+			"lab" : "",
+			"paired-end" : "false",
+			"quality_metric_of:array" : "[KLAB_PIPELINE:5_S21_L006_R1_001.nodup.bam]",
+			"read length" : "50",
+			"sample size" : "9316137",
+			"step_run" : "anshul-kundaje:atac-seq-trim-align-filter-step-run-v1"
+		}
+		
+		,
+		{
+			"ENCODE_qc_type" : "generic_quality_metric",
+			"attachment" : "/mnt/work1/users/carlsgroup/workinprogres/nibeh/atac_dnase_pipelines5/output_treatedMB6/qc/output_treatedMB6.all_quality_metrics.tar",
+			"award" : "",
+			"lab" : "",
+			"name" : ":All calculated QC",
+			"quality_metric_of:array" : "[KLAB_PIPELINE:output_treatedMB6_rep1-rep3.IDR0.1.narrowPeak.gz]",
+			"step_run" : "anshul-kundaje:atac-seq-idr-step-run-v1"
+		}
+		
+	]
+}
