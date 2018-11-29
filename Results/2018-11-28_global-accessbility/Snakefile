@@ -1,0 +1,74 @@
+import pandas as pd
+import numpy as np
+import itertools
+
+CONFIG = pd.read_table("config.tsv", index_col=False)
+PEAKS = CONFIG["narrowPeak"].tolist()
+CONDITIONS = np.unique(CONFIG["Condition"].tolist())
+REPLICATES = np.unique(CONFIG["Replicate"].tolist())
+CASES = [c + "_Rep" + str(r) for (c, r)
+         in zip(CONFIG["Condition"], CONFIG["Replicate"])]
+PAIRS = [c1 + "-" + c2 for (c1, c2) in itertools.combinations(CONDITIONS, 2)]
+
+
+rule all:
+    input:
+        "Global/peak-size-distribution.png",
+        expand("Consensus/{condition}.filtered.bed", condition=CONDITIONS),
+        expand("Consensus/consensus.{pair}.bed", pair=PAIRS),
+        "Consensus/consensus.all.bed",
+        expand("Consensus/consensus-mtx.{pair}.tsv", pair=PAIRS),
+        "Consensus/consensus-mtx.all.tsv",
+        expand("Jaccard/{case1}.{case2}.jaccard.tsv",
+               case1=CASES, case2=CASES),
+        "Jaccard/jaccard.png"
+
+rule peak_dist:
+    input:
+        script = "peak-stats.py",
+        peaks = PEAKS
+    output:
+        "Global/peak-size-distribution.png"
+    shell:
+        "python {input.script}"
+
+rule consensus:
+    input:
+        script = "generate-consensus.sh",
+        peaks = PEAKS
+    output:
+        expand("Consensus/{condition}.filtered.bed", condition=CONDITIONS),
+        expand("Consensus/consensus.{pair}.bed", pair=PAIRS),
+        "Consensus/consensus.all.bed"
+    shell:
+        "sh {input.script}"
+
+rule consensus_matrix:
+    input:
+        script = "generate-consensus-matrices.R",
+        pairs = expand("Consensus/consensus.{pair}.bed", pair=PAIRS),
+        all = "Consensus/consensus.all.bed"
+    output:
+        expand("Consensus/consensus-mtx.{pair}.tsv", pair=PAIRS),
+        "Consensus/consensus-mtx.all.tsv"
+    shell:
+        "Rscript {input.script}"
+
+rule jaccard:
+    input:
+        "../2018-11-27_peak-filtering/Filter/logq_4.0/{case1}.bed",
+        "../2018-11-27_peak-filtering/Filter/logq_4.0/{case2}.bed"
+    output:
+        "Jaccard/{case1}.{case2}.jaccard.tsv"
+    shell:
+        "bedtools jaccard -a {input[0]} -b {input[1]} > {output}"
+
+rule plot_jaccard:
+    input:
+        script = "plot-jaccard.R",
+        files = expand(
+            "Jaccard/{case1}.{case2}.jaccard.tsv", case1=CASES, case2=CASES)
+    output:
+        "Jaccard/jaccard.png"
+    shell:
+        "Rscript {input.script}"

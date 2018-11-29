@@ -1,0 +1,9 @@
+Condition	Replicate	narrowPeak
+Ctrl	1	../2018-11-27_peak-filtering/Filter/logq_4.0/Ctrl_Rep1.bed
+Ctrl	2	../2018-11-27_peak-filtering/Filter/logq_4.0/Ctrl_Rep2.bed
+Ctrl	3	../2018-11-27_peak-filtering/Filter/logq_4.0/Ctrl_Rep3.bed
+MB6	1	../2018-11-27_peak-filtering/Filter/logq_4.0/MB6_Rep1.bed
+MB6	2	../2018-11-27_peak-filtering/Filter/logq_4.0/MB6_Rep2.bed
+MB6	3	../2018-11-27_peak-filtering/Filter/logq_4.0/MB6_Rep3.bed
+MB6Pen	1	../2018-11-27_peak-filtering/Filter/logq_4.0/MB6Pen_Rep1.bed
+MB6Pen	2	../2018-11-27_peak-filtering/Filter/logq_4.0/MB6Pen_Rep2.bed
