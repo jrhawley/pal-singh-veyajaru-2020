@@ -47,3 +47,9 @@ rsconnect/
 *.ba[im]
 *.gz
 *.tar
+
+# Snakemake pipeline info
+**/.snakemake/*
+
+# Log files
+**/Logs/*

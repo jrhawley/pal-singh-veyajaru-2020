@@ -1,0 +1,24 @@
+import pandas as pd
+import numpy as np
+import itertools
+
+CONFIG = pd.read_table("config.tsv", index_col=False)
+BAMS = CONFIG["BAM"].tolist()
+CONDITIONS = np.unique(CONFIG["Condition"].tolist())
+REPLICATES = np.unique(CONFIG["Replicate"].tolist())
+CASES = [c + "_Rep" + str(r) for (c, r)
+         in zip(CONFIG["Condition"], CONFIG["Replicate"])]
+
+rule all:
+    input:
+        expand("Counts/{case}.sorted.bed", case=CASES)
+
+rule map_counts:
+    input:
+        script = "generate-counts.sh",
+        consensus = "../2018-11-28_global-accessbility/Consensus/consensus.Ctrl-MB6.bed",
+        bam = BAMS
+    output:
+        expand("Counts/{case}.sorted.bed", case=CASES)
+    shell:
+        "qsub {input.script}"

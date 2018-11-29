@@ -135,8 +135,9 @@ def filter_q_thresh(bg, name):
         # check that "logq_t" folder exists. if not, make it
         if not os.path.exists(os.path.join("Filter", thresh_name)):
             os.mkdir(os.path.join("Filter", thresh_name))
-        peaks[peaks["logq"] >= t].to_csv(
-            os.path.join("Filter", thresh_name, name))
+        peaks[peaks["logq"] >= t].loc[:, ["chr", "start", "end"]].to_csv(
+            os.path.join("Filter", thresh_name, name), sep="\t", index=False,
+            header=False)
 
 # ==============================================================================
 # Main
@@ -180,8 +181,8 @@ for i in range(len(peak_metadata)):
     cond = peak_metadata["Condition"].iloc[i]
     rep = peak_metadata["Replicate"].iloc[i]
     print("\t", cond, rep)
-    base = cond + "_Rep" + str(rep) + ".bedGraph"
-    # filter_q_thresh(peak_metadata["Unique"].iloc[i], base)
+    base = cond + "_Rep" + str(rep) + ".bed"
+    filter_q_thresh(peak_metadata["Unique"].iloc[i], base)
     for t in LOG10Q_THRESHOLDS:
         filt_file = os.path.join("Filter", "logq_" + str(t), base)
         counts.loc[(counts["Condition"] == cond) & (counts["Replicate"] == rep) & (
