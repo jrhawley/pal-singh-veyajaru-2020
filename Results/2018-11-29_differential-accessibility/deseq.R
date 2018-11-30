@@ -90,6 +90,7 @@ res_dt = as.data.table(cbind(
     consensus_loci,
     as.data.frame(res)
 ))
+res_dt[, q := p.adjust(pvalue, method="fdr")]
 
 fwrite(
     res_dt,
@@ -112,7 +113,7 @@ dev.off()
 # histogram of p-values
 gg <- (
     ggplot(data = res_dt)
-    + geom_histogram(aes(x = pvalue))
+    + geom_histogram(aes(x = pvalue), binwidth = 0.01)
     + labs(
         title = "Ctrl vs MB6 Differential Accessibility",
         subtitle = "Histogram of p-values",
@@ -122,6 +123,24 @@ gg <- (
 )
 ggsave(
     "DEseq/Ctrl-vs-MB6.pvalues.png",
+    height = 12,
+    width = 20,
+    units = "cm"
+)
+
+# histogram of q-values
+gg <- (
+    ggplot(data = res_dt)
+    + geom_histogram(aes(x = padj), binwidth = 0.01)
+    + labs(
+        title = "Ctrl vs MB6 Differential Accessibility",
+        subtitle = "Histogram of q-values",
+        x = "q-value",
+        y = "Frequency"
+    )
+)
+ggsave(
+    "DEseq/Ctrl-vs-MB6.qvalues.png",
     height = 12,
     width = 20,
     units = "cm"
@@ -146,15 +165,15 @@ gg <- (
     )
 )
 ggsave(
-    "Ctrl-vs-MB6.volcano.png",
+    "DEseq/Ctrl-vs-MB6.volcano.png",
     height = 12,
     width = 20,
     units = "cm"
 )
 
 
-# RLD Plot
-png("RLD.png", width = 12, height = 12, units = "cm", res = 300)
-rld = rlog(dds, blind = FALSE)
-vsn::meanSdPlot(assay(rld))
-dev.off()
+# # RLD Plot
+# png("RLD.png", width = 12, height = 12, units = "cm", res = 300)
+# rld = rlog(dds, blind = FALSE)
+# vsn::meanSdPlot(assay(rld))
+# dev.off()
