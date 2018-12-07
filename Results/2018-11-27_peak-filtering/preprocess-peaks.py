@@ -135,8 +135,13 @@ def filter_q_thresh(bg, name):
         # check that "logq_t" folder exists. if not, make it
         if not os.path.exists(os.path.join("Filter", thresh_name)):
             os.mkdir(os.path.join("Filter", thresh_name))
+        # write output BED file
         peaks[peaks["logq"] >= t].loc[:, ["chr", "start", "end"]].to_csv(
             os.path.join("Filter", thresh_name, name), sep="\t", index=False,
+            header=False)
+        # write output bedGraph file with peak score (-log10(q)) as score col
+        peaks[peaks["logq"] >= t].loc[:, ["chr", "start", "end", "logq"]].to_csv(
+            os.path.join("Filter", thresh_name, name + "Graph"), sep="\t", index=False,
             header=False)
 
 # ==============================================================================
