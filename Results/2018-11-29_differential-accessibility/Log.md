@@ -23,3 +23,7 @@ The results between the raw and filtered cases are very different, surprisingly.
 There are > 2000 significantly differentially accessible sites in the filtered peaks and ~ 1400 in the raw peaks.
 I suspect that the decrease in sites is due to decreased power by performing for tests (more peaks means more tests, means more stringent filtering).
 
+# 2018-12-10
+
+I've switched the annotation so that group 1 is MB6, making all downstream results of the form "MB6 - Ctrl", which makes more intuitive sense, at a glance.
+With the 2005 significantly differentially accessible loci between the MB6 and Ctrl samples, I'm going to annotate them with GENCODE v19 (latest version for hg19, which is what the FASTQs were aligned to).

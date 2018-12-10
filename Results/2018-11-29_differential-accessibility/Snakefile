@@ -11,7 +11,8 @@ CASES = [c + "_Rep" + str(r) for (c, r)
 
 rule all:
     input:
-        expand("Counts/{case}.sorted.bed", case=CASES)
+        expand("Counts/{case}.sorted.bed", case=CASES),
+        "DiffBind/Filtered/EdgeR/diff-bound-sites.significant.annotated.tsv"
 
 rule map_counts:
     input:
@@ -22,3 +23,32 @@ rule map_counts:
         expand("Counts/{case}.sorted.bed", case=CASES)
     shell:
         "qsub {input.script}"
+
+rule diffbind:
+    input:
+        script = "diffbind.R",
+        config = "diffbind-config-filtered.csv"
+    output:
+        "DiffBind/Filtered/EdgeR/bindingaffinity_heatmap.png",
+        "DiffBind/Filtered/EdgeR/boxplot.png",
+        "DiffBind/Filtered/EdgeR/correlation_heatmap_diffbind.png",
+        "DiffBind/Filtered/EdgeR/correlation_heatmap_peakcallerscore.png",
+        "DiffBind/Filtered/EdgeR/correlation_heatmap_readcount.png",
+        "DiffBind/Filtered/EdgeR/ma.png",
+        "DiffBind/Filtered/EdgeR/p-value-histogram.png",
+        "DiffBind/Filtered/EdgeR/pca.png",
+        "DiffBind/Filtered/EdgeR/volcano.png",
+        "DiffBind/Filtered/EdgeR/diff-bound-sites.all.tsv",
+        "DiffBind/Filtered/EdgeR/diff-bound-sites.significant.tsv"
+    shell:
+        "Rscript {input.script} {input.config} -m edgeR -o 'DiffBind/Filtered/EdgeR'"
+
+rule annotate:
+    input:
+        script = "annotate.R",
+        dars = "DiffBind/Filtered/EdgeR/diff-bound-sites.significant.tsv",
+        gencode = "../../Data/External/Gencode/gencode.v19.annotation.genes.bed"
+    output:
+        "DiffBind/Filtered/EdgeR/diff-bound-sites.significant.annotated.tsv"
+    shell:
+        "Rscript {input.script}"

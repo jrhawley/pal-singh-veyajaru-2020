@@ -1,4 +1,4 @@
-    # ==============================================================================
+# ==============================================================================
 # Environment
 # ==============================================================================
 suppressMessages(library("data.table"))
@@ -56,7 +56,10 @@ db_counts = dba.count(db)
 # ==============================================================================
 # Analysis
 # ==============================================================================
-db_contrast = dba.contrast(db_counts, categories = DBA_CONDITION)
+mask_mb6 = dba.mask(db_counts, DBA_CONDITION, "MB6")
+mask_ctrl = dba.mask(db_counts, DBA_CONDITION, "Ctrl")
+# ensure statistics will be of the form MB6 - Ctrl
+db_contrast = dba.contrast(db_counts, mask_mb6, mask_ctrl, "MB6", "Ctrl")
 cat("Analyzing data\n")
 db_analysis = dba.analyze(db_contrast)
 
