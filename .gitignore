@@ -47,6 +47,7 @@ rsconnect/
 *.ba[im]
 *.gz
 *.tar
+*.narrowPeak
 
 # Snakemake pipeline info
 **/.snakemake/*

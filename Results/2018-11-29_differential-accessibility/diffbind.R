@@ -72,6 +72,23 @@ fwrite(
     paste0(ARGS$outdir, "/diff-bound-sites.significant.tsv"),
     sep = "\t"
 )
+fwrite(
+    sigsites[abs(Fold) >= 1.5, .SD],
+    paste0(ARGS$outdir, "/diff-bound-sites.significant-threshold.tsv"),
+    sep = "\t"
+)
+fwrite(
+    sigsites[, .SD, .SDcols = c("seqnames", "start", "end")],
+    paste0(ARGS$outdir, "/diff-bound-sites.significant.bed"),
+    sep = "\t",
+    col.names = FALSE
+)
+fwrite(
+    sigsites[abs(Fold) >= 1.5, .SD, .SDcols = c("seqnames", "start", "end")],
+    paste0(ARGS$outdir, "/diff-bound-sites.significant-threshold.bed"),
+    sep = "\t",
+    col.names = FALSE
+)
 
 # save all sites
 sites_gr = dba.report(db_analysis, th = 1)
@@ -81,6 +98,36 @@ fwrite(
     sites,
     paste0(ARGS$outdir, "/diff-bound-sites.all.tsv"),
     sep = "\t"
+)
+
+# calculate the number of significant sites at a certain fold-change threshold
+deltas = seq(0, 3, 0.05)
+sizes = data.table(
+    Threshold = deltas,
+    Increased = sapply(
+        deltas,
+        function(d) {sigsites[Fold >= d, .N]}
+    ),
+    Decreased = sapply(
+        deltas,
+        function(d) {sigsites[-Fold >= d, .N]}
+    )
+)
+sizes[, "% Increased" := Increased / (Increased + Decreased)]
+sizes[, "% Decreased" := Decreased / (Increased + Decreased)]
+sizes_counts = melt(
+    sizes,
+    id.vars = "Threshold",
+    measure.vars = c("Increased", "Decreased"),
+    variable.name = "Direction",
+    value.name = "Count"
+)
+sizes_prop = melt(
+    sizes,
+    id.vars = "Threshold",
+    measure.vars = c("% Increased", "% Decreased"),
+    variable.name = "Direction",
+    value.name = "Percentage"
 )
 
 # ==============================================================================
@@ -174,6 +221,31 @@ gg <- (
 )
 ggsave(
     paste0(ARGS$outdir, "/p-value-histogram.png"),
+    height = 12,
+    width = 20,
+    units = "cm"
+)
+
+gg <- (
+    ggplot(data = sizes_counts)
+    + geom_col(aes(x = Threshold, y = Count, fill = Direction))
+    + labs(x = "log(FC) Threshold", y = "Number of significant sites")
+)
+ggsave(
+    paste0(ARGS$outdir, "/sigsites-fc-threshold.count.png"),
+    height = 12,
+    width = 20,
+    units = "cm"
+)
+gg <- (
+    ggplot(data = sizes_prop)
+    + geom_col(aes(x = Threshold, y = Percentage, fill = Direction))
+    + labs(x = "log(FC) Threshold", y = "Fraction of significant sites")
+    # + scale_x_discrete(breaks = seq(0, 3, 0.5), labels = seq(0, 3, 0.5))
+    # + scale_fill_continuous(labels = c("Increased", "Decreased"))
+)
+ggsave(
+    paste0(ARGS$outdir, "/sigsites-fc-threshold.fraction.png"),
     height = 12,
     width = 20,
     units = "cm"

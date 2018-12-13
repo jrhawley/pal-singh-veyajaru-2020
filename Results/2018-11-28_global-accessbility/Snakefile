@@ -19,6 +19,7 @@ rule all:
         "Consensus/consensus.all.bed",
         expand("Consensus/consensus-mtx.{pair}.tsv", pair=PAIRS),
         "Consensus/consensus-mtx.all.tsv",
+        "Consensus/upset.png",
         expand("Jaccard/{case1}.{case2}.jaccard.tsv",
                case1=CASES, case2=CASES),
         "Jaccard/jaccard.png"
@@ -70,5 +71,14 @@ rule plot_jaccard:
             "Jaccard/{case1}.{case2}.jaccard.tsv", case1=CASES, case2=CASES)
     output:
         "Jaccard/jaccard.png"
+    shell:
+        "Rscript {input.script}"
+
+rule upset:
+    input:
+        script = "plot-upset.R",
+        data = "Consensus/consensus-mtx.all.tsv"
+    output:
+        "Consensus/upset.png"
     shell:
         "Rscript {input.script}"
