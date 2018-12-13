@@ -36,3 +36,9 @@ Globally, the MB6 samples have less accessible chromatin than the Ctrl samples (
 
 I tried using GREAT to see if there was any quick ontology interpretation that I could make.
 Using a q-value threshold of 0.05 and a log2FC threshold of 1.5, there are 193 significantly differentially accessible sites, and no terms were returned by GREAT.
+
+# Conclusions
+
+I haven't mapped any of the significantly differentially accessible sites to genes or proteins from Rashim's model, so the most conclusive this that I can say is that there are 193 significantly differentially accessible sites, 161 decreased, and 32 increased, in the MB6 samples compared to the Ctrls.
+Additionally, there is a global reduction in accessibility.
+I've sent this information along to Rashim, and hopefully he is able to interpret these results.

@@ -3,6 +3,8 @@
 # ==============================================================================
 suppressMessages(library("data.table"))
 suppressMessages(library("ggplot2"))
+suppressMessages(library("gtable"))
+suppressMessages(library("grid"))
 suppressMessages(library("DiffBind"))
 suppressMessages(library("argparse"))
 
@@ -100,6 +102,9 @@ fwrite(
     sep = "\t"
 )
 
+# load in data if needed in the future
+# sites = fread(paste0(ARGS$outdir, "/diff-bound-sites.all.tsv"))
+
 # calculate the number of significant sites at a certain fold-change threshold
 deltas = seq(0, 3, 0.05)
 sizes = data.table(
@@ -184,15 +189,55 @@ png(
 dba.plotMA(db_analysis, contrast = 1)
 dev.off()
 
-png(
-    paste0(ARGS$outdir, "/volcano.png"),
-    width = 20,
-    height = 20,
-    units = "cm",
-    res = 300
+sites[, Colouring := ifelse(abs(Fold) > 1.5 & FDR < 0.05, "firebrick", "gray")]
+volcano = (
+    ggplot()
+    + geom_point(
+        data = sites,
+        aes(x = Fold, y = -log10(FDR), colour = Colouring)
+    )
+    + geom_vline(aes(xintercept = c(-1.5, 1.5)), lty = "dashed")
+    + geom_hline(aes(yintercept = -log10(0.05)), lty = "dashed")
+    + scale_colour_identity()
+    + labs(
+        x = "log2(MB6) - log2(Ctrl)",
+        y = "-log10(FDR)",
+        title = "MB6 vs Ctrl Accessibility"
+    )
+    + theme_minimal()
 )
-dba.plotVolcano(db_analysis, contrast = 1)
-dev.off()
+# top_density = ggplotGrob(
+#     ggplot(data = sites)
+#     + geom_density(aes(x = Fold))
+#     + theme_void()
+# )
+# side_density = ggplotGrob(
+#     ggplot(data = sites)
+#     + geom_density(aes(x = -log10(FDR)))
+#     + coord_flip()
+#     + theme_void()
+# )
+# png(
+#     paste0(ARGS$outdir, "/volcano.png"),
+#     width = 12,
+#     height = 20,
+#     units = "cm",
+#     res = 300
+# )
+# gg = rbind(
+#     c(top_density, NA),
+#     c(volcano, side_density)
+# )
+# gg$widths = unit.pmax(top_density$widths, volcano$widths)
+# grid.newpage()
+# grid.draw(gg)
+# dev.off()
+ggsave(
+    paste0(ARGS$outdir, "/volcano.png"),
+    height = 20,
+    width = 12,
+    units = "cm"
+)
 
 png(
     paste0(ARGS$outdir, "/boxplot.png"),
