@@ -1,7 +1,0 @@
-SampleID,Factor,Condition,Replicate,bamReads,Peaks,PeakCaller
-Ctrl1,Ctrl,Ctrl,1,"../../Data/Processed/2018-09-17/output_Ctrl/align/rep1/Rashimi_ATAC1_S25_L007_R1_001.nodup.bam","../../Data/Processed/2018-09-17/output_Ctrl/peak/macs2/rep1/Rashimi_ATAC1_S25_L007_R1_001.nodup.tn5.pf.narrowPeak",narrowPeak
-Ctrl2,Ctrl,Ctrl,2,"../../Data/Processed/2018-09-17/output_Ctrl/align/rep2/Rashim_ATAC2_S26_L007_R1_001.nodup.bam","../../Data/Processed/2018-09-17/output_Ctrl/peak/macs2/rep2/Rashim_ATAC2_S26_L007_R1_001.nodup.tn5.pf.narrowPeak",narrowPeak
-Ctrl3,Ctrl,Ctrl,3,"../../Data/Processed/2018-09-17/output_Ctrl/align/rep3/Rashim_ATAC3_S27_L007_R1_001.nodup.bam","../../Data/Processed/2018-09-17/output_Ctrl/peak/macs2/rep3/Rashim_ATAC3_S27_L007_R1_001.nodup.tn5.pf.narrowPeak",narrowPeak
-MB61,MB6,MB6,1,"../../Data/Processed/2018-09-17/output_MB6/align/rep1/Rashim_ATAC4_S28_L007_R1_001.nodup.bam","../../Data/Processed/2018-09-17/output_MB6/peak/macs2/rep1/Rashim_ATAC4_S28_L007_R1_001.nodup.tn5.pf.narrowPeak.gz",narrowPeak
-MB62,MB6,MB6,2,"../../Data/Processed/2018-09-17/output_MB6/align/rep2/5_S21_L006_R1_001.nodup.bam","../../Data/Processed/2018-09-17/output_MB6/peak/macs2/rep2/5_S21_L006_R1_001.nodup.tn5.pf.narrowPeak.gz",narrowPeak
-MB63,MB6,MB6,3,"../../Data/Processed/2018-09-17/output_MB6/align/rep3/6_S22_L006_R1_001.nodup.bam","../../Data/Processed/2018-09-17/output_MB6/peak/macs2/rep3/6_S22_L006_R1_001.nodup.tn5.pf.narrowPeak.gz",narrowPeak
