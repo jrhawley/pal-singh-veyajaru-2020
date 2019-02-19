@@ -22,7 +22,7 @@ import pybedtools as pbt
 # Constants
 # ==============================================================================
 LOG10Q_THRESHOLDS = np.linspace(1, 5, 5)
-peak_metadata = pd.read_table("config.tsv", index_col=False)
+peak_metadata = pd.read_csv("config.tsv", sep='\t', index_col=False)
 peak_metadata["Filtered"] = [
     os.path.join("BedGraphs", c + "_Rep" + str(r) + ".filtered.bedGraph")
     for (c, r) in zip(peak_metadata["Condition"], peak_metadata["Replicate"])
@@ -143,6 +143,7 @@ def filter_q_thresh(bg, name):
         peaks[peaks["logq"] >= t].loc[:, ["chr", "start", "end", "logq"]].to_csv(
             os.path.join("Filter", thresh_name, name + "Graph"), sep="\t", index=False,
             header=False)
+
 
 # ==============================================================================
 # Main

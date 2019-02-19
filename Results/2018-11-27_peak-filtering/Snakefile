@@ -1,0 +1,49 @@
+import pandas as pd
+import os.path as path
+
+# ==============================================================================
+# Configuration
+# ==============================================================================
+CONFIG = pd.read_csv('config.tsv', index_col=False, sep='\t')
+CASES = [c + "_Rep" + str(r) for (c, r)
+         in zip(CONFIG["Condition"], CONFIG["Replicate"])]
+THRESHOLDS = ['1.0', '2.0', '3.0', '4.0', '5.0']
+
+# ==============================================================================
+# Rules
+# ==============================================================================
+rule all:
+    input:
+        expand('BedGraphs/{case}.filtered.bedGraph', case=CASES),
+        expand('BedGraphs/{case}.filtered.sorted.bedGraph', case=CASES),
+        expand('BedGraphs/{case}.filtered.sorted.unique.bedGraph', case=CASES),
+        expand('Filter/logq_{t}/{case}.bed', t=THRESHOLDS, case=CASES),
+        expand('Filter/logq_{t}/{case}.bedGraph', t=THRESHOLDS, case=CASES),
+        expand('Filter/logq_{t}/{case}.sorted.bedGraph',
+               t=THRESHOLDS, case=CASES),
+        'Filter/peak-counts.png',
+        'Filter/peak-counts.tsv',
+
+rule preprocess_peaks:
+    input:
+        script = 'preprocess-peaks.py',
+        config = 'config.tsv'
+    output:
+        expand('BedGraphs/{case}.filtered.bedGraph', case=CASES),
+        expand('BedGraphs/{case}.filtered.sorted.bedGraph', case=CASES),
+        expand('BedGraphs/{case}.filtered.sorted.unique.bedGraph', case=CASES),
+        expand('Filter/logq_{t}/{case}.bed', t=THRESHOLDS, case=CASES),
+        expand('Filter/logq_{t}/{case}.bedGraph', t=THRESHOLDS, case=CASES),
+        'Filter/peak-counts.png',
+        'Filter/peak-counts.tsv',
+    shell:
+        'python {input.script}'
+
+# sort in numerical chromosome order
+rule sort_peaks:
+    input:
+        'Filter/logq_{t}/{case}.bedGraph'
+    output:
+        'Filter/logq_{t}/{case}.sorted.bedGraph'
+    shell:
+        'sort -k1,1 -V -k2,2n {input} > {output}'
