@@ -1,5 +1,5 @@
 #$ -t 1-6
-#$ -q lupiengroup
+#$ -q light.q
 #$ -V
 #$ -cwd
 #$ -N ReadsInConsensus
@@ -32,6 +32,6 @@ echo "bedtools coverage -abam $bam -b $consensus -counts > Counts/${con}_Rep${re
 bedtools coverage -abam $bam -b $consensus -counts > Counts/${con}_Rep${rep}.bed
 
 echo "Sorting"
-echo "sort -k1,1 -k2,2n Counts/${con}_Rep${rep}.bed > Counts/${con}_Rep${rep}.sorted.bed"
-sort -k1,1 -k2,2n Counts/${con}_Rep${rep}.bed > Counts/${con}_Rep${rep}.sorted.bed
+echo "sort -k1,1 -V -k2,2n Counts/${con}_Rep${rep}.bed > Counts/${con}_Rep${rep}.sorted.bed"
+sort -k1,1 -V -k2,2n Counts/${con}_Rep${rep}.bed > Counts/${con}_Rep${rep}.sorted.bed
 echo "Done"
