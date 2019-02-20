@@ -2,17 +2,18 @@ import pandas as pd
 import numpy as np
 import itertools
 
-CONFIG = pd.read_table("config.tsv", index_col=False)
-BAMS = CONFIG["BAM"].tolist()
+CONFIG = pd.read_csv("config.csv", index_col=False)
+BAMS = CONFIG["bamReads"].tolist()
 CONDITIONS = np.unique(CONFIG["Condition"].tolist())
 REPLICATES = np.unique(CONFIG["Replicate"].tolist())
-CASES = [c + "_Rep" + str(r) for (c, r)
-         in zip(CONFIG["Condition"], CONFIG["Replicate"])]
+CASES = ['Ctrl_Rep1', 'Ctrl_Rep2', 'Ctrl_Rep3',
+         'MB6_Rep1', 'MB6_Rep2', 'MB6_Rep3']
+
+COMPARISONS = ['mb6-ctrl', 'mb6pen-ctrl', 'mb6-mb6pen']
 
 rule all:
     input:
-        expand("Counts/{case}.sorted.bed", case=CASES),
-        "DiffBind/Filtered/EdgeR/diff-bound-sites.significant.annotated.tsv"
+        expand("Counts/{case}.sorted.bed", case=CASES)
 
 rule map_counts:
     input:
@@ -20,6 +21,7 @@ rule map_counts:
         consensus = "../2018-11-28_global-accessbility/Consensus/consensus.Ctrl-MB6.bed",
         bam = BAMS
     output:
+        expand("Counts/{case}.bed", case=CASES),
         expand("Counts/{case}.sorted.bed", case=CASES)
     shell:
         "qsub {input.script}"
@@ -27,28 +29,48 @@ rule map_counts:
 rule diffbind:
     input:
         script = "diffbind.R",
-        config = "diffbind-config-filtered.csv"
+        config = "config.csv"
     output:
-        "DiffBind/Filtered/EdgeR/bindingaffinity_heatmap.png",
-        "DiffBind/Filtered/EdgeR/boxplot.png",
-        "DiffBind/Filtered/EdgeR/correlation_heatmap_diffbind.png",
-        "DiffBind/Filtered/EdgeR/correlation_heatmap_peakcallerscore.png",
-        "DiffBind/Filtered/EdgeR/correlation_heatmap_readcount.png",
-        "DiffBind/Filtered/EdgeR/ma.png",
-        "DiffBind/Filtered/EdgeR/p-value-histogram.png",
-        "DiffBind/Filtered/EdgeR/pca.png",
-        "DiffBind/Filtered/EdgeR/volcano.png",
-        "DiffBind/Filtered/EdgeR/diff-bound-sites.all.tsv",
-        "DiffBind/Filtered/EdgeR/diff-bound-sites.significant.tsv"
+        "DiffBind/mb6-ctrl.rds",
+        "DiffBind/mb6-ctrl.all.tsv",
+        "DiffBind/mb6-ctrl.significant-threshold.tsv",
+        "DiffBind/mb6-ctrl.significant-threshold.bedGraph",
+        "DiffBind/mb6pen-ctrl.rds",
+        "DiffBind/mb6pen-ctrl.all.tsv",
+        "DiffBind/mb6pen-ctrl.significant-threshold.tsv",
+        "DiffBind/mb6pen-ctrl.significant-threshold.bedGraph",
+        "DiffBind/mb6-mb6pen.rds",
+        "DiffBind/mb6-mb6pen.all.tsv",
+        "DiffBind/mb6-mb6pen.significant-threshold.tsv",
+        "DiffBind/mb6-mb6pen.significant-threshold.bedGraph"
     shell:
-        "Rscript {input.script} {input.config} -m edgeR -o 'DiffBind/Filtered/EdgeR'"
+        "Rscript {input.script} {input.config} -o DiffBind"
 
-rule annotate:
+# rule annotate:
+#     input:
+#         script = "annotate.R",
+#         dars = "DiffBind/Filtered/EdgeR/diff-bound-sites.significant.tsv",
+#         gencode = "../../Data/External/Gencode/gencode.v19.annotation.genes.bed"
+#     output:
+#         "DiffBind/Filtered/EdgeR/diff-bound-sites.significant.annotated.tsv"
+#     shell:
+#         "Rscript {input.script}"
+
+
+# rule sort_dars:
+#     input:
+#         'DiffBind/Filtered/EdgeR/diff-bound-sites.{comp}.significant-threshold.bedGraph'
+#     output:
+#         'DiffBind/Filtered/EdgeR/diff-bound-sites.{comp}.significant-threshold.sorted.bedGraph'
+#     shell:
+#         'sort -k1,1 -k2,2n -V {input} > {output}'
+
+rule aggregate_dars:
     input:
-        script = "annotate.R",
-        dars = "DiffBind/Filtered/EdgeR/diff-bound-sites.significant.tsv",
-        gencode = "../../Data/External/Gencode/gencode.v19.annotation.genes.bed"
+        'DiffBind/mb6-ctrl.significant-threshold.bedGraph',
+        'DiffBind/mb6pen-ctrl.significant-threshold.bedGraph',
+        'DiffBind/mb6-mb6pen.significant-threshold.bedGraph'
     output:
-        "DiffBind/Filtered/EdgeR/diff-bound-sites.significant.annotated.tsv"
+        'DiffBind/all.significant-threshold.sorted.bedGraph'
     shell:
-        "Rscript {input.script}"
+        'cat {input} | bedtools merge -i stdin -c 5 -o min > {output}'
