@@ -1,7 +1,0 @@
-Condition	Replicate	BAM
-Ctrl	1	"../../Data/Processed/2018-09-17/output_Ctrl/align/rep1/Rashimi_ATAC1_S25_L007_R1_001.nodup.bam"
-Ctrl	2	"../../Data/Processed/2018-09-17/output_Ctrl/align/rep2/Rashim_ATAC2_S26_L007_R1_001.nodup.bam"
-Ctrl	3	"../../Data/Processed/2018-09-17/output_Ctrl/align/rep3/Rashim_ATAC3_S27_L007_R1_001.nodup.bam"
-MB6	1	"../../Data/Processed/2018-09-17/output_MB6/align/rep1/Rashim_ATAC4_S28_L007_R1_001.nodup.bam"
-MB6	2	"../../Data/Processed/2018-09-17/output_MB6/align/rep2/5_S21_L006_R1_001.nodup.bam"
-MB6	3	"../../Data/Processed/2018-09-17/output_MB6/align/rep3/6_S22_L006_R1_001.nodup.bam"
