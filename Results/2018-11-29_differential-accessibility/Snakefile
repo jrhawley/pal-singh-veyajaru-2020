@@ -31,18 +31,33 @@ rule diffbind:
         script = "diffbind.R",
         config = "config.csv"
     output:
-        "DiffBind/mb6-ctrl.rds",
+        # results
+        "DiffBind/diffbind-analysis.rds",
         "DiffBind/mb6-ctrl.all.tsv",
         "DiffBind/mb6-ctrl.significant-threshold.tsv",
         "DiffBind/mb6-ctrl.significant-threshold.bedGraph",
-        "DiffBind/mb6pen-ctrl.rds",
         "DiffBind/mb6pen-ctrl.all.tsv",
         "DiffBind/mb6pen-ctrl.significant-threshold.tsv",
         "DiffBind/mb6pen-ctrl.significant-threshold.bedGraph",
-        "DiffBind/mb6-mb6pen.rds",
         "DiffBind/mb6-mb6pen.all.tsv",
         "DiffBind/mb6-mb6pen.significant-threshold.tsv",
-        "DiffBind/mb6-mb6pen.significant-threshold.bedGraph"
+        "DiffBind/mb6-mb6pen.significant-threshold.bedGraph",
+        "DiffBind/mb6-ctrl.fdr-counts.tsv",
+        "DiffBind/mb6-ctrl.fdr-proportions.tsv",
+        # MB6 vs Ctrl plots
+        "DiffBind/mb6-ctrl.volcano.pdf",
+        "DiffBind/mb6-ctrl.boxplot.all.pdf",
+        "DiffBind/mb6-ctrl.boxplot.dar.pdf",
+        "DiffBind/mb6-ctrl.heatmap.affinity.pdf",
+        "DiffBind/mb6-ctrl.heatmap.diffbind-corr.pdf",
+        "DiffBind/mb6-ctrl.p-values.pdf",
+        "DiffBind/mb6-ctrl.sig-thresh-sites.count.pdf",
+        "DiffBind/mb6-ctrl.sig-thresh-sites.frac.pdf",
+        "DiffBind/mb6-ctrl.ma.pdf",
+        # plots for all samples
+        "DiffBind/all.heatmap.read-count-corr.pdf",
+        "DiffBind/all.heatmap.peak-caller-score.pdf",
+        "DiffBind/all.pca.pdf",
     shell:
         "Rscript {input.script} {input.config} -o DiffBind"
 
