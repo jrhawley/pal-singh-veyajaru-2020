@@ -79,6 +79,9 @@ db_contrast = dba.contrast(
 cat("Analyzing data\n")
 db_analysis = dba.analyze(db_contrast, bReduceObjects = FALSE)
 
+# save R objects for future loading, if needed
+saveRDS(db_analysis, paste0(ARGS$outdir, "/diffbind-analysis.rds"))
+
 # Extract DARs
 # -------------------------------------
 # get DARs from analyses
@@ -157,9 +160,6 @@ mb6_mb6pen[, start := start - 1]
 #   Fold = log2(MB6) - log2(MB6Pen)
 mb6_ctrl[, Fold := -Fold]
 mb6pen_ctrl[, Fold := -Fold]
-
-# save R objects for future loading, if needed
-saveRDS(db_analysis, paste0(ARGS$outdir, "/diffbind-analysis.rds"))
 
 # Save tested regions
 # -------------------------------------
