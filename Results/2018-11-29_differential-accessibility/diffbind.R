@@ -61,8 +61,7 @@ db = dba(sampleSheet=ARGS$samplesheet)
 db$config$AnalysisMethod = ARGS$method
 
 cat("Counting data\n")
-db_counts = dba.count(db, score = DBA_SCORE_TMM_READS_FULL_CPM)
-db_peaks = dba.peakset(db_counts, bRetrieve = TRUE)
+db_counts = dba.count(db)
 
 # ==============================================================================
 # Analysis
@@ -76,31 +75,6 @@ db_contrast = dba.contrast(
     categories = DBA_CONDITION,
     minMembers = 2
 )
-# db_contrast_mb6_ctrl = dba.contrast(
-#     db_counts,
-#     mask_mb6,
-#     mask_ctrl,
-#     "MB6",
-#     "Ctrl"
-# )
-# # ensure statistics will be of the form MB6Pen - Ctrl
-# db_contrast_mb6pen_ctrl = dba.contrast(
-#     db_counts,
-#     mask_mb6pen,
-#     mask_ctrl,
-#     "MB6Pen",
-#     "Ctrl",
-#     minMembers = 2
-# )
-# # ensure statistics will be of the form MB6 - MB6Pen
-# db_contrast_mb6_mb6pen = dba.contrast(
-#     db_counts,
-#     mask_mb6,
-#     mask_mb6pen,
-#     "MB6",
-#     "MB6Pen",
-#     minMembers = 2
-# )
 
 cat("Analyzing data\n")
 db_analysis = dba.analyze(db_contrast, bReduceObjects = FALSE)
@@ -186,7 +160,6 @@ mb6pen_ctrl[, Fold := -Fold]
 
 # save R objects for future loading, if needed
 saveRDS(db_analysis, paste0(ARGS$outdir, "/diffbind-analysis.rds"))
-saveRDS(db_peaks, paste0(ARGS$outdir, "/diffbind-peaks-cpm.rds"))
 
 # Save tested regions
 # -------------------------------------
@@ -434,7 +407,7 @@ ggsave(
 # )
 # dba.plotBox(db_analysis, contrast = 1, label = DBA_CONDITION)
 # dev.off()
-cat("  Boxplot\n")
+cat("  Boxplots\n")
 # read count boxplot in all peaks
 gg_boxplot_all = (
     ggplot(data = all_counts)
@@ -486,7 +459,7 @@ ggsave(
     units = "cm"
 )
 
-
+cat("  Heatmaps")
 png(
     paste0(ARGS$outdir, "/bindingaffinity_heatmap.png"),
     width = 20,
@@ -498,7 +471,7 @@ dba.plotHeatmap(db_analysis, contrast = 1, correlations = FALSE)
 dev.off()
 
 gg <- (
-    ggplot(data = sites)
+    ggplot(data = mb6_ctrl)
     + geom_histogram(aes(x = p.value), binwidth = 0.01)
     + labs(x = "p-value", y = "Frequency")
 )
