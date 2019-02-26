@@ -295,57 +295,9 @@ all_counts = rbind(
 # Plots
 # ==============================================================================
 cat("Plotting data\n")
-# png(
-#     paste0(ARGS$outdir, "/correlation_heatmap_peakcallerscore.png"),
-#     width = 20,
-#     height = 20,
-#     units = "cm",
-#     res = 300
-# )
-# plot(db)
-# dev.off()
-
-# png(
-#     paste0(ARGS$outdir, "/correlation_heatmap_readcount.png"),
-#     width = 20,
-#     height = 20,
-#     units = "cm",
-#     res = 300
-# )
-# plot(db_counts)
-# dev.off()
-
-# png(
-#     paste0(ARGS$outdir, "/correlation_heatmap_diffbind.png"),
-#     width = 20,
-#     height = 20,
-#     units = "cm",
-#     res = 300
-# )
-# plot(db_analysis, contrast = 1)
-# dev.off()
-
-# png(
-#     paste0(ARGS$outdir, "/pca.png"),
-#     width = 20,
-#     height = 20,
-#     units = "cm",
-#     res = 300
-# )
-# dba.plotPCA(db_analysis, contrast = 1, label = DBA_CONDITION)
-# dev.off()
-
-# png(
-#     paste0(ARGS$outdir, "/ma.png"),
-#     width = 20,
-#     height = 20,
-#     units = "cm",
-#     res = 300
-# )
-# dba.plotMA(db_analysis, contrast = 1)
-# dev.off()
 
 # Volcano plot showing DARs and fold change
+# -------------------------------------
 cat("  Volcano\n")
 mb6_ctrl[, Colouring := ifelse(abs(Fold) > FOLD_THRESH & FDR < FDR_THRESH, "firebrick", "gray")]
 volcano = (
@@ -407,6 +359,9 @@ ggsave(
 # )
 # dba.plotBox(db_analysis, contrast = 1, label = DBA_CONDITION)
 # dev.off()
+
+# Chromatin accessibility boxplots
+# -------------------------------------
 cat("  Boxplots\n")
 # read count boxplot in all peaks
 gg_boxplot_all = (
@@ -459,36 +414,69 @@ ggsave(
     units = "cm"
 )
 
+# Heatmaps
+# -------------------------------------
 cat("  Heatmaps")
-png(
-    paste0(ARGS$outdir, "/bindingaffinity_heatmap.png"),
+# heatmap showing binding affinity
+pdf(
+    paste0(ARGS$outdir, "/mb6-ctrl.heatmap.affinity.pdf"),
     width = 20,
-    height = 20,
-    units = "cm",
-    res = 300
+    height = 20
 )
 dba.plotHeatmap(db_analysis, contrast = 1, correlations = FALSE)
 dev.off()
 
+# heatmap showing DiffBind score correlation for all samples
+pdf(
+    paste0(ARGS$outdir, "/mb6-ctrl.heatmap.diffbind-corr.pdf"),
+    width = 20,
+    height = 20
+)
+plot(db_analysis, contrast = 1)
+dev.off()
+
+# heatmap showing peak caller score
+pdf(
+    paste0(ARGS$outdir, "/all.heatmap.peak-caller-score.pdf"),
+    width = 20,
+    height = 20
+)
+plot(db)
+dev.off()
+
+# heatmap showing read count correlation for all samples
+pdf(
+    paste0(ARGS$outdir, "/all.heatmap.read-count-corr.pdf"),
+    width = 20,
+    height = 20
+)
+plot(db_counts)
+dev.off()
+
+# QC plots
+# -------------------------------------
+cat("  QC Plots")
+# histogram of p-values
 gg <- (
     ggplot(data = mb6_ctrl)
     + geom_histogram(aes(x = p.value), binwidth = 0.01)
     + labs(x = "p-value", y = "Frequency")
 )
 ggsave(
-    paste0(ARGS$outdir, "/p-value-histogram.png"),
+    paste0(ARGS$outdir, "/mb6-ctrl.p-values.pdf"),
     height = 12,
     width = 20,
     units = "cm"
 )
 
+# histograms for direction based on fold change threshold
 gg <- (
     ggplot(data = sizes_counts)
     + geom_col(aes(x = Threshold, y = Count, fill = Direction))
     + labs(x = "log(FC) Threshold", y = "Number of significant sites")
 )
 ggsave(
-    paste0(ARGS$outdir, "/sigsites-fc-threshold.count.png"),
+    paste0(ARGS$outdir, "/mb6-ctrl.sig-thresh-sites.count.pdf"),
     height = 12,
     width = 20,
     units = "cm"
@@ -497,14 +485,31 @@ gg <- (
     ggplot(data = sizes_prop)
     + geom_col(aes(x = Threshold, y = Percentage, fill = Direction))
     + labs(x = "log(FC) Threshold", y = "Fraction of significant sites")
-    # + scale_x_discrete(breaks = seq(0, 3, 0.5), labels = seq(0, 3, 0.5))
-    # + scale_fill_continuous(labels = c("Increased", "Decreased"))
 )
 ggsave(
-    paste0(ARGS$outdir, "/sigsites-fc-threshold.fraction.png"),
+    paste0(ARGS$outdir, "/mb6-ctrl.sig-thresh-sites.frac.pdf"),
     height = 12,
     width = 20,
     units = "cm"
 )
+
+# PCA plot
+pdf(
+    paste0(ARGS$outdir, "/all.pca.pdf"),
+    width = 20,
+    height = 20
+)
+dba.plotPCA(db_analysis, label = DBA_CONDITION)
+dev.off()
+
+# MA plot
+pdf(
+    paste0(ARGS$outdir, "/mb6-ctrl.ma.pdf"),
+    width = 20,
+    height = 20
+)
+dba.plotMA(db_analysis, contrast = 1)
+dev.off()
+
 
 cat("Done\n")
