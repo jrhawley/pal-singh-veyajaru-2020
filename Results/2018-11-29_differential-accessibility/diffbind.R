@@ -40,8 +40,9 @@ suppressMessages(library("data.table"))
 suppressMessages(library("ggplot2"))
 suppressMessages(library("gtable"))
 suppressMessages(library("grid"))
-suppressMessages(library("DiffBind"))
 suppressMessages(library("edgeR"))
+suppressMessages(library("DiffBind"))
+suppressMessages(library("dunn.test"))
 
 if (ARGS$method == "DESeq2") {
     ARGS$method = DBA_DESEQ2
@@ -276,12 +277,12 @@ colnames(all_counts_mb6)[1] = "Log2MeanCount"
 colnames(all_counts_mb6pen)[1] = "Log2MeanCount"
 
 #   classify which type of DAR the sites belong to
-all_counts_ctrl[sig_up_idx, DAR := "More Accessible in MB6"]
-all_counts_ctrl[sig_dn_idx, DAR := "More Accessible in Ctrl"]
-all_counts_mb6[sig_up_idx, DAR := "More Accessible in MB6"]
-all_counts_mb6[sig_dn_idx, DAR := "More Accessible in Ctrl"]
-all_counts_mb6pen[sig_up_idx, DAR := "More Accessible in MB6"]
-all_counts_mb6pen[sig_dn_idx, DAR := "More Accessible in Ctrl"]
+all_counts_ctrl[sig_up_idx, DAR := paste0("More Accessible in MB6 (n = ", length(sig_up_idx), ")")]
+all_counts_ctrl[sig_dn_idx, DAR := paste0("More Accessible in Ctrl (n = ", length(sig_dn_idx), ")")]
+all_counts_mb6[sig_up_idx, DAR := paste0("More Accessible in MB6 (n = ", length(sig_up_idx), ")")]
+all_counts_mb6[sig_dn_idx, DAR := paste0("More Accessible in Ctrl (n = ", length(sig_dn_idx), ")")]
+all_counts_mb6pen[sig_up_idx, DAR := paste0("More Accessible in MB6 (n = ", length(sig_up_idx), ")")]
+all_counts_mb6pen[sig_dn_idx, DAR := paste0("More Accessible in Ctrl (n = ", length(sig_dn_idx), ")")]
 
 #   create long form data.table for plotting
 all_counts = rbind(
@@ -290,6 +291,24 @@ all_counts = rbind(
     all_counts_mb6pen
 )
 
+fwrite(
+    all_counts,
+    paste0(ARGS$outdir, "/all-readcounts.tsv"),
+    col.names = TRUE,
+    sep = "\t"
+)
+
+# Hypothesis testing
+# --------------------------------------
+# global differential accessibility
+dt = dunn.test(
+    x = all_counts[, Log2MeanCount],
+    g = all_counts[, Condition],
+    method = "bh",
+    kw = TRUE,
+    label = TRUE,
+    list = TRUE
+)
 
 # ==============================================================================
 # Plots
@@ -323,43 +342,6 @@ ggsave(
     units = "cm"
 )
 
-# top_density = ggplotGrob(
-#     ggplot(data = sites)
-#     + geom_density(aes(x = Fold))
-#     + theme_void()
-# )
-# side_density = ggplotGrob(
-#     ggplot(data = sites)
-#     + geom_density(aes(x = -log10(FDR)))
-#     + coord_flip()
-#     + theme_void()
-# )
-# png(
-#     paste0(ARGS$outdir, "/volcano.png"),
-#     width = 12,
-#     height = 20,
-#     units = "cm",
-#     res = 300
-# )
-# gg = rbind(
-#     c(top_density, NA),
-#     c(volcano, side_density)
-# )
-# gg$widths = unit.pmax(top_density$widths, volcano$widths)
-# grid.newpage()
-# grid.draw(gg)
-# dev.off()
-
-# png(
-#     paste0(ARGS$outdir, "/boxplot.png"),
-#     width = 20,
-#     height = 20,
-#     units = "cm",
-#     res = 300
-# )
-# dba.plotBox(db_analysis, contrast = 1, label = DBA_CONDITION)
-# dev.off()
-
 # Chromatin accessibility boxplots
 # -------------------------------------
 cat("  Boxplots\n")
@@ -373,10 +355,36 @@ gg_boxplot_all = (
         aes(x = Condition, y = Log2MeanCount),
         width = 0.1
     )
+    # comparison lines
+    + geom_line(
+        data = data.table(
+            x = c(
+                "Ctrl", "Ctrl", "MB6", "MB6",
+                "MB6", "MB6", "MB6Pen", "MB6Pen",
+                "Ctrl", "Ctrl", "MB6Pen", "MB6Pen"
+            ),
+            y = c(
+                12, 12.5, 12.5, 12,
+                13, 13.5, 13.5, 13,
+                14, 14.5, 14.5, 14
+            ),
+            g = rep(1:3, each = 4)
+        ),
+        mapping = aes(x = x, y = y, group = g)
+    )
+    # significance values for comparisons
+    + annotate(
+        "text",
+        x = c(1.5, 2.5, 2),
+        y = c(12.5, 13.5, 14.5),
+        label = "FDR < 2.2e-16",
+        vjust = -0.2
+    )
+    + ylim(0, 15)
     + labs(
         x = NULL,
-        y = "log2(mean read count)",
-        title = "Accessibility in All Peaks"
+        y = "log2(mean normalized read count in peaks)",
+        title = "Accessibility in All Peaks (n = 85 891)"
     )
     + guides(fill = FALSE)
     + theme_minimal()
@@ -400,7 +408,7 @@ gg_boxplot_dar = (
     )
     + labs(
         x = NULL,
-        y = "log2(mean read count)",
+        y = "log2(mean normalized read count in peaks)",
         title = "Accessibility in Differentially Accessible Peaks"
     )
     + guides(fill = FALSE)
