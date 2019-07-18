@@ -277,12 +277,14 @@ colnames(all_counts_mb6)[1] = "Log2MeanCount"
 colnames(all_counts_mb6pen)[1] = "Log2MeanCount"
 
 #   classify which type of DAR the sites belong to
-all_counts_ctrl[sig_up_idx, DAR := paste0("More Accessible in MB6 (n = ", length(sig_up_idx), ")")]
-all_counts_ctrl[sig_dn_idx, DAR := paste0("More Accessible in Ctrl (n = ", length(sig_dn_idx), ")")]
-all_counts_mb6[sig_up_idx, DAR := paste0("More Accessible in MB6 (n = ", length(sig_up_idx), ")")]
-all_counts_mb6[sig_dn_idx, DAR := paste0("More Accessible in Ctrl (n = ", length(sig_dn_idx), ")")]
-all_counts_mb6pen[sig_up_idx, DAR := paste0("More Accessible in MB6 (n = ", length(sig_up_idx), ")")]
-all_counts_mb6pen[sig_dn_idx, DAR := paste0("More Accessible in Ctrl (n = ", length(sig_dn_idx), ")")]
+name_mb6_acc = paste0("More Accessible in MB6 (n = ", length(sig_up_idx), ")")
+name_ctrl_acc = paste0("More Accessible in Ctrl (n = ", length(sig_dn_idx), ")")
+all_counts_ctrl[sig_up_idx, DAR := name_mb6_acc]
+all_counts_ctrl[sig_dn_idx, DAR := name_ctrl_acc]
+all_counts_mb6[sig_up_idx, DAR := name_mb6_acc]
+all_counts_mb6[sig_dn_idx, DAR := name_ctrl_acc]
+all_counts_mb6pen[sig_up_idx, DAR := name_mb6_acc]
+all_counts_mb6pen[sig_dn_idx, DAR := name_ctrl_acc]
 
 #   create long form data.table for plotting
 all_counts = rbind(
@@ -308,6 +310,33 @@ dt = dunn.test(
     kw = TRUE,
     label = TRUE,
     list = TRUE
+)
+
+# differential accessibility in MB6-vs-Ctrl DARs
+mb6dar_mb6_vs_mb6pen = wilcox.test(
+    x = all_counts[DAR == name_mb6_acc & Condition == "MB6Pen", Log2MeanCount],
+    y = all_counts[DAR == name_mb6_acc & Condition == "MB6", Log2MeanCount]
+)
+mb6dar_ctrl_vs_mb6pen = wilcox.test(
+    x = all_counts[DAR == name_mb6_acc & Condition == "MB6Pen", Log2MeanCount],
+    y = all_counts[DAR == name_mb6_acc & Condition == "Ctrl", Log2MeanCount]
+)
+ctrldar_mb6_vs_mb6pen = wilcox.test(
+    x = all_counts[DAR == name_ctrl_acc & Condition == "MB6Pen", Log2MeanCount],
+    y = all_counts[DAR == name_ctrl_acc & Condition == "MB6", Log2MeanCount]
+)
+ctrldar_ctrl_vs_mb6pen = wilcox.test(
+    x = all_counts[DAR == name_ctrl_acc & Condition == "MB6Pen", Log2MeanCount],
+    y = all_counts[DAR == name_ctrl_acc & Condition == "Ctrl", Log2MeanCount]
+)
+
+dar_tests = data.table(
+    p = c(
+        ctrldar_ctrl_vs_mb6pen$p.value,
+        ctrldar_mb6_vs_mb6pen$p.value,
+        mb6dar_ctrl_vs_mb6pen$p.value,
+        mb6dar_mb6_vs_mb6pen$p.value
+    )
 )
 
 # ==============================================================================
@@ -406,6 +435,43 @@ gg_boxplot_dar = (
         aes(x = Condition, y = Log2MeanCount),
         width = 0.1
     )
+    # comparison lines
+    + geom_line(
+        data = data.table(
+            x = c(
+                "Ctrl", "Ctrl", "MB6Pen", "MB6Pen",
+                "MB6", "MB6", "MB6Pen", "MB6Pen",
+                "Ctrl", "Ctrl", "MB6Pen", "MB6Pen",
+                "MB6", "MB6", "MB6Pen", "MB6Pen"
+            ),
+            y = c(
+                6.5, 7, 7, 6,
+                4, 6.2, 6.2, 6,
+                6.5, 8.5, 8.5, 8,
+                7.5, 8, 8, 7.5
+            ),
+            DAR = rep(c(name_ctrl_acc, name_mb6_acc), each = 8),
+            g = rep(1:4, each = 4)
+        ),
+        mapping = aes(x = x, y = y, group = g)
+    )
+    # significance values for comparisons
+    + geom_text(
+        data = data.table(
+            x = rep(c(2.5, 2), 2),
+            y = c(6.2, 7, 8, 8.5),
+            DAR = rep(c(name_ctrl_acc, name_mb6_acc), each = 2),
+            label = c(
+                "p = 4.23e-20",
+                "p = 3.70e-58",
+                "p = 3.36e-10",
+                "p = 1.21e-4"
+            )
+        ),
+        mapping = aes(x = x, y = y, label = label),
+        vjust = -0.2
+    )
+    + ylim(0, 9)
     + labs(
         x = NULL,
         y = "log2(mean normalized read count in peaks)",
