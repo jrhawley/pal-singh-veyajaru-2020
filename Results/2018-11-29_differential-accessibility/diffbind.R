@@ -458,8 +458,8 @@ gg_boxplot_dar = (
     # significance values for comparisons
     + geom_text(
         data = data.table(
-            x = rep(c(2.5, 2), 2),
-            y = c(6.2, 7, 8, 8.5),
+            x = rep(c(2, 2.5), 2),
+            y = c(7, 6.2, 8.5, 8),
             DAR = rep(c(name_ctrl_acc, name_mb6_acc), each = 2),
             label = c(
                 "p = 4.23e-20",
