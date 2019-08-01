@@ -461,7 +461,7 @@ gg_boxplot_all = (
     + theme_minimal()
 )
 ggsave(
-    paste0(ARGS$outdir, "/mb6-ctrl.boxplot.all.png"),
+    paste0(ARGS$outdir, "/mb6-ctrl.boxplot.all.pdf"),
     height = 12,
     width = 12,
     units = "cm"
@@ -524,7 +524,7 @@ gg_boxplot_dar = (
     + theme_minimal()
 )
 ggsave(
-    paste0(ARGS$outdir, "/mb6-ctrl.boxplot.dar.png"),
+    paste0(ARGS$outdir, "/mb6-ctrl.boxplot.dar.pdf"),
     height = 12,
     width = 20,
     units = "cm"
