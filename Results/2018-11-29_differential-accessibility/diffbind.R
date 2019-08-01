@@ -317,6 +317,10 @@ mb6dar_mb6_vs_mb6pen = wilcox.test(
     x = all_counts[DAR == name_mb6_acc & Condition == "MB6Pen", Log2MeanCount],
     y = all_counts[DAR == name_mb6_acc & Condition == "MB6", Log2MeanCount]
 )
+mb6dar_ctrl_vs_mb6 = wilcox.test(
+    x = all_counts[DAR == name_mb6_acc & Condition == "MB6", Log2MeanCount],
+    y = all_counts[DAR == name_mb6_acc & Condition == "Ctrl", Log2MeanCount]
+)
 mb6dar_ctrl_vs_mb6pen = wilcox.test(
     x = all_counts[DAR == name_mb6_acc & Condition == "MB6Pen", Log2MeanCount],
     y = all_counts[DAR == name_mb6_acc & Condition == "Ctrl", Log2MeanCount]
@@ -325,19 +329,57 @@ ctrldar_mb6_vs_mb6pen = wilcox.test(
     x = all_counts[DAR == name_ctrl_acc & Condition == "MB6Pen", Log2MeanCount],
     y = all_counts[DAR == name_ctrl_acc & Condition == "MB6", Log2MeanCount]
 )
+ctrldar_ctrl_vs_mb6 = wilcox.test(
+    x = all_counts[DAR == name_ctrl_acc & Condition == "MB6", Log2MeanCount],
+    y = all_counts[DAR == name_ctrl_acc & Condition == "Ctrl", Log2MeanCount]
+)
 ctrldar_ctrl_vs_mb6pen = wilcox.test(
     x = all_counts[DAR == name_ctrl_acc & Condition == "MB6Pen", Log2MeanCount],
     y = all_counts[DAR == name_ctrl_acc & Condition == "Ctrl", Log2MeanCount]
 )
 
+dar_ctrl_vs_mb6pen = wilcox.test(
+    x = all_counts[!is.na(DAR) & Condition == "MB6Pen", Log2MeanCount],
+    y = all_counts[!is.na(DAR) & Condition == "Ctrl", Log2MeanCount]
+)
+dar_mb6_vs_mb6pen = wilcox.test(
+    x = all_counts[!is.na(DAR) & Condition == "MB6Pen", Log2MeanCount],
+    y = all_counts[!is.na(DAR) & Condition == "MB6", Log2MeanCount]
+)
+
 dar_tests = data.table(
+    x = c(
+        "MB6",
+        "MB6Pen",
+        "MB6Pen",
+        "MB6",
+        "MB6Pen",
+        "MB6Pen"
+    ),
+    y = c(
+        "Ctrl",
+        "Ctrl",
+        "MB6",
+        "Ctrl",
+        "Ctrl",
+        "MB6"
+    ),
+    DAR = rep(c(name_ctrl_acc, name_mb6_acc), each = 3),
     p = c(
+        ctrldar_ctrl_vs_mb6$p.value,
         ctrldar_ctrl_vs_mb6pen$p.value,
         ctrldar_mb6_vs_mb6pen$p.value,
+        mb6dar_ctrl_vs_mb6$p.value,
         mb6dar_ctrl_vs_mb6pen$p.value,
         mb6dar_mb6_vs_mb6pen$p.value
     )
 )
+# multiple test correction
+dar_tests[DAR == name_ctrl_acc, q := p.adjust(p, method = "holm")]
+dar_tests[DAR == name_mb6_acc, q := p.adjust(p, method = "holm")]
+
+# label for plotting
+dar_tests[, label := paste("FWER =", signif(q, digits = 3))]
 
 # ==============================================================================
 # Plots
@@ -365,7 +407,7 @@ volcano = (
     + theme_minimal()
 )
 ggsave(
-    paste0(ARGS$outdir, "/mb6-ctrl.volcano.pdf"),
+    paste0(ARGS$outdir, "/mb6-ctrl.volcano.png"),
     height = 20,
     width = 12,
     units = "cm"
@@ -419,7 +461,7 @@ gg_boxplot_all = (
     + theme_minimal()
 )
 ggsave(
-    paste0(ARGS$outdir, "/mb6-ctrl.boxplot.all.pdf"),
+    paste0(ARGS$outdir, "/mb6-ctrl.boxplot.all.png"),
     height = 12,
     width = 12,
     units = "cm"
@@ -439,39 +481,39 @@ gg_boxplot_dar = (
     + geom_line(
         data = data.table(
             x = c(
+                "Ctrl", "Ctrl", "MB6", "MB6",
                 "Ctrl", "Ctrl", "MB6Pen", "MB6Pen",
                 "MB6", "MB6", "MB6Pen", "MB6Pen",
+                "Ctrl", "Ctrl", "MB6", "MB6",
                 "Ctrl", "Ctrl", "MB6Pen", "MB6Pen",
                 "MB6", "MB6", "MB6Pen", "MB6Pen"
             ),
             y = c(
-                6.5, 7, 7, 6,
-                4, 6.2, 6.2, 6,
-                6.5, 8.5, 8.5, 8,
-                7.5, 8, 8, 7.5
+                6.6, 7, 7, 6.6,     # Good
+                7.5, 8, 8, 7,       # Good
+                4, 6.2, 6.2, 6,     # Good
+                6.5, 8, 8, 7.5,     # Good
+                9, 9.5, 9.5, 9,     # Good
+                8.2, 8.6, 8.6, 8.2
             ),
-            DAR = rep(c(name_ctrl_acc, name_mb6_acc), each = 8),
-            g = rep(1:4, each = 4)
+            DAR = rep(c(name_ctrl_acc, name_mb6_acc), each = 12),
+            g = rep(1:6, each = 4)
         ),
         mapping = aes(x = x, y = y, group = g)
     )
     # significance values for comparisons
     + geom_text(
         data = data.table(
-            x = rep(c(2, 2.5), 2),
-            y = c(7, 6.2, 8.5, 8),
-            DAR = rep(c(name_ctrl_acc, name_mb6_acc), each = 2),
-            label = c(
-                "p = 4.23e-20",
-                "p = 3.70e-58",
-                "p = 3.36e-10",
-                "p = 1.21e-4"
-            )
+            x = rep(c(1.5, 2, 2.5), 2),
+            y = c(7, 8, 6.2, 8, 9.5, 8.6),
+            DAR = dar_tests[, DAR],
+            label = dar_tests[, label]
         ),
         mapping = aes(x = x, y = y, label = label),
-        vjust = -0.2
+        vjust = -0.2,
+        size = 3
     )
-    + ylim(0, 9)
+    + ylim(0, 10)
     + labs(
         x = NULL,
         y = "log2(mean normalized read count in peaks)",
@@ -482,7 +524,7 @@ gg_boxplot_dar = (
     + theme_minimal()
 )
 ggsave(
-    paste0(ARGS$outdir, "/mb6-ctrl.boxplot.dar.pdf"),
+    paste0(ARGS$outdir, "/mb6-ctrl.boxplot.dar.png"),
     height = 12,
     width = 20,
     units = "cm"
